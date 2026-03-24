@@ -1,0 +1,1926 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Plantilla PPI</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --bg: #0f1117;
+                --surface: #181c27;
+                --surface2: #1e2334;
+                --border: #2a3050;
+                --accent: #4f8ef7;
+                --accent2: #7c5cf6;
+                --green: #22c55e;
+                --text: #e2e8f7;
+                --muted: #7a85a0;
+                --radius: 12px;
+                --font: "Sora", sans-serif;
+                --mono: "JetBrains Mono", monospace;
+            }
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                background: var(--bg);
+                color: var(--text);
+                font-family: var(--font);
+                min-height: 100vh;
+                padding: 0 0 60px;
+            }
+
+            /* HEADER */
+            header {
+                background: #0f1117;
+                border-bottom: 1px solid var(--border);
+                padding: 20px 32px;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+            .header-inner {
+                max-width: 960px;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                justify-content: space-between;
+            }
+            .logo-pill {
+                background: linear-gradient(
+                    135deg,
+                    var(--accent),
+                    var(--accent2)
+                );
+                border-radius: 8px;
+                padding: 6px 12px;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: white;
+                flex-shrink: 0;
+            }
+            h1 {
+                font-size: 18px;
+                font-weight: 600;
+            }
+            .subtitle {
+                font-size: 12px;
+                color: var(--muted);
+                margin-top: 2px;
+            }
+
+            .btn-preview {
+                background: linear-gradient(
+                    135deg,
+                    var(--accent),
+                    var(--accent2)
+                );
+                color: white;
+                border: none;
+                border-radius: 9px;
+                padding: 10px 22px;
+                font-family: var(--font);
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                transition: all 0.2s;
+                box-shadow: 0 4px 16px rgba(79, 142, 247, 0.3);
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            .btn-preview:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 6px 24px rgba(79, 142, 247, 0.45);
+            }
+
+            /* PROGRESS */
+            .progress-wrap {
+                max-width: 960px;
+                margin: 14px auto 0;
+                padding: 0 24px;
+            }
+            .progress-bg {
+                height: 3px;
+                background: var(--border);
+                border-radius: 2px;
+                overflow: hidden;
+            }
+            .progress-fill {
+                height: 100%;
+                background: linear-gradient(
+                    90deg,
+                    var(--accent),
+                    var(--accent2)
+                );
+                border-radius: 2px;
+                transition: width 0.4s;
+                width: 0%;
+            }
+            .progress-label {
+                font-size: 11px;
+                color: var(--muted);
+                margin-top: 5px;
+                font-family: var(--mono);
+            }
+
+            /* NOMBRE */
+            .nombre-block {
+                max-width: 960px;
+                margin: 20px auto 0;
+                padding: 0 24px;
+            }
+            .nombre-card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 16px 20px;
+                display: flex;
+                align-items: center;
+                gap: 14px;
+            }
+            .nombre-label {
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--muted);
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                white-space: nowrap;
+            }
+            .nombre-input {
+                background: var(--surface2);
+                border: 1px solid var(--border);
+                border-radius: 7px;
+                color: var(--text);
+                font-family: var(--font);
+                font-size: 14px;
+                padding: 9px 14px;
+                flex: 1;
+                outline: none;
+                transition: border-color 0.2s;
+            }
+            .nombre-input:focus {
+                border-color: var(--accent);
+            }
+
+            /* MAIN LAYOUT */
+            main {
+                max-width: 960px;
+                margin: 18px auto 0;
+                padding: 0 24px;
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            /* SECTION */
+            .section-card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                overflow: hidden;
+            }
+            .section-header {
+                padding: 13px 18px;
+                background: var(--surface2);
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                align-items: center;
+                gap: 11px;
+                cursor: pointer;
+                user-select: none;
+            }
+            .section-header:hover {
+                background: #252b42;
+            }
+            .section-badge {
+                background: linear-gradient(
+                    135deg,
+                    var(--accent),
+                    var(--accent2)
+                );
+                color: white;
+                border-radius: 5px;
+                padding: 2px 8px;
+                font-size: 11px;
+                font-weight: 700;
+                font-family: var(--mono);
+            }
+            .section-title {
+                font-size: 14px;
+                font-weight: 600;
+                flex: 1;
+            }
+            .chevron {
+                color: var(--muted);
+                font-size: 10px;
+                transition: transform 0.2s;
+            }
+            .section-card.open .chevron {
+                transform: rotate(180deg);
+            }
+            .section-body {
+                display: none;
+                padding: 12px;
+                flex-direction: column;
+                gap: 9px;
+            }
+            .section-card.open .section-body {
+                display: flex;
+            }
+
+            /* SUBSECTION */
+            .subsection {
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 9px;
+                overflow: hidden;
+            }
+            .sub-header {
+                padding: 10px 14px;
+                display: flex;
+                align-items: center;
+                gap: 9px;
+                border-bottom: 1px solid var(--border);
+            }
+            .sub-dot {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--accent);
+                flex-shrink: 0;
+            }
+            .sub-name {
+                font-size: 12px;
+                font-weight: 600;
+            }
+
+            /* OPTIONS */
+            .options-list {
+                padding: 7px 9px;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .opt-row {
+                display: flex;
+                align-items: flex-start;
+                gap: 9px;
+                padding: 7px 9px;
+                border-radius: 7px;
+                border: 1px solid transparent;
+                cursor: pointer;
+                transition: all 0.12s;
+            }
+            .opt-row:hover {
+                background: var(--surface2);
+                border-color: var(--border);
+            }
+            .opt-row.selected {
+                background: rgba(79, 142, 247, 0.08);
+                border-color: rgba(79, 142, 247, 0.3);
+            }
+
+            .opt-row input[type="radio"] {
+                appearance: none;
+                width: 15px;
+                height: 15px;
+                border-radius: 50%;
+                border: 2px solid var(--border);
+                margin-top: 2px;
+                flex-shrink: 0;
+                cursor: pointer;
+                transition: all 0.12s;
+            }
+            .opt-row input[type="radio"]:checked {
+                border-color: var(--accent);
+                background: var(--accent);
+                box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.18);
+            }
+            .opt-row input[type="checkbox"] {
+                appearance: none;
+                width: 15px;
+                height: 15px;
+                border-radius: 4px;
+                border: 2px solid var(--border);
+                margin-top: 2px;
+                flex-shrink: 0;
+                cursor: pointer;
+                transition: all 0.12s;
+                position: relative;
+            }
+            .opt-row input[type="checkbox"]:checked {
+                border-color: var(--green);
+                background: var(--green);
+            }
+            .opt-row input[type="checkbox"]:checked::after {
+                content: "✓";
+                position: absolute;
+                top: -1px;
+                left: 2px;
+                color: white;
+                font-size: 9px;
+                font-weight: 800;
+            }
+
+            .opt-content {
+                flex: 1;
+                display: flex;
+                align-items: flex-start;
+                gap: 7px;
+            }
+            .opt-text {
+                font-size: 12.5px;
+                color: var(--text);
+                line-height: 1.6;
+                flex: 1;
+            }
+            .opt-row.selected .opt-text {
+                color: #c5d4ff;
+            }
+
+            .btn-edit {
+                background: none;
+                border: 1px solid transparent;
+                border-radius: 5px;
+                color: var(--muted);
+                cursor: pointer;
+                padding: 2px 5px;
+                font-size: 11px;
+                flex-shrink: 0;
+                transition: all 0.12s;
+                line-height: 1;
+            }
+            .btn-edit:hover {
+                border-color: var(--border);
+                color: var(--accent);
+                background: var(--surface2);
+            }
+            .opt-text[contenteditable="true"] {
+                background: var(--surface2);
+                border: 1px solid var(--accent);
+                border-radius: 5px;
+                padding: 2px 7px;
+                outline: none;
+            }
+
+            /* SUBOPTIONS */
+            .suboptions {
+                margin: 0 9px 7px 36px;
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+                border-left: 2px solid var(--border);
+                padding-left: 11px;
+            }
+
+            /* FREE TEXT */
+            .free-area {
+                padding: 9px 13px 13px;
+            }
+            .free-label {
+                font-size: 10px;
+                color: var(--muted);
+                margin-bottom: 5px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.07em;
+            }
+            .free-textarea {
+                width: 100%;
+                background: var(--surface2);
+                border: 1px solid var(--border);
+                border-radius: 7px;
+                color: var(--text);
+                font-family: var(--font);
+                font-size: 12.5px;
+                line-height: 1.6;
+                padding: 9px 13px;
+                resize: vertical;
+                min-height: 60px;
+                outline: none;
+                transition: border-color 0.2s;
+            }
+            .free-textarea:focus {
+                border-color: var(--accent);
+            }
+
+            /* FIXED INFO */
+            .info-block {
+                background: var(--surface2);
+                border: 1px solid var(--border);
+                border-radius: 7px;
+                padding: 11px 14px;
+                font-size: 12.5px;
+                line-height: 1.65;
+                color: #a0adc8;
+                margin: 9px 13px 13px;
+            }
+
+            /* NESTED */
+            .nested-wrap {
+                padding: 7px 9px;
+                display: flex;
+                flex-direction: column;
+                gap: 7px;
+            }
+            .nested-sub {
+                background: var(--surface2);
+                border: 1px solid var(--border);
+                border-radius: 7px;
+                overflow: hidden;
+            }
+            .nested-header {
+                padding: 8px 12px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                border-bottom: 1px solid var(--border);
+            }
+            .nested-dot {
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+                background: var(--muted);
+                flex-shrink: 0;
+            }
+            .nested-name {
+                font-size: 11.5px;
+                font-weight: 600;
+                color: var(--muted);
+            }
+
+            /* ─── VISTA PREVIA ─── */
+            #preview-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 200;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+            }
+            #preview-overlay.open {
+                display: flex;
+            }
+
+            #preview-modal {
+                background: #fff;
+                color: #111;
+                border-radius: 12px;
+                width: 100%;
+                max-width: 760px;
+                max-height: 88vh;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+                overflow: hidden;
+            }
+
+            .preview-toolbar {
+                background: #f5f5f5;
+                border-bottom: 1px solid #ddd;
+                padding: 12px 18px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                flex-shrink: 0;
+            }
+            .preview-toolbar span {
+                font-size: 13px;
+                color: #555;
+                flex: 1;
+                font-family: sans-serif;
+            }
+            .btn-copy {
+                background: #4f8ef7;
+                color: white;
+                border: none;
+                border-radius: 7px;
+                padding: 8px 18px;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                font-family: sans-serif;
+                transition: background 0.15s;
+            }
+            .btn-copy:hover {
+                background: #3a7de0;
+            }
+            .btn-copy.ok {
+                background: #22c55e;
+            }
+            .btn-close-preview {
+                background: none;
+                border: 1px solid #ccc;
+                border-radius: 7px;
+                padding: 7px 13px;
+                font-size: 13px;
+                cursor: pointer;
+                color: #555;
+                font-family: sans-serif;
+            }
+            .btn-close-preview:hover {
+                background: #eee;
+            }
+
+            #preview-content {
+                padding: 32px 40px;
+                overflow-y: auto;
+                flex: 1;
+                font-family: "Times New Roman", Times, serif;
+                font-size: 13pt;
+                line-height: 1.7;
+                color: #111;
+            }
+            #preview-content .doc-title {
+                font-size: 16pt;
+                font-weight: bold;
+                text-decoration: underline;
+                text-align: center;
+                margin-bottom: 18px;
+            }
+            #preview-content .doc-field {
+                margin-bottom: 14px;
+            }
+            #preview-content .doc-field b {
+                font-weight: bold;
+            }
+            #preview-content .doc-heading {
+                font-size: 13pt;
+                font-weight: bold;
+                margin: 22px 0 10px;
+            }
+            #preview-content .doc-bullet {
+                margin: 6px 0 6px 20px;
+            }
+            #preview-content .doc-bullet b {
+                font-weight: bold;
+            }
+            #preview-content .doc-sub {
+                margin: 4px 0 4px 40px;
+                color: #333;
+                font-size: 12pt;
+            }
+            #preview-content .doc-subsub {
+                margin: 3px 0 3px 60px;
+                color: #444;
+                font-size: 11.5pt;
+            }
+            #preview-content .doc-check {
+                margin: 4px 0 4px 40px;
+            }
+
+            /* TOAST */
+            #toast {
+                position: fixed;
+                bottom: 28px;
+                left: 50%;
+                transform: translateX(-50%) translateY(80px);
+                background: var(--green);
+                color: white;
+                padding: 10px 24px;
+                border-radius: 40px;
+                font-size: 13px;
+                font-weight: 600;
+                transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                z-index: 9999;
+                pointer-events: none;
+            }
+            #toast.show {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            /* BOTÓN PATOLOGÍAS */
+            .btn-patologias {
+                background: var(--surface2);
+                border: 1px solid var(--border);
+                border-radius: 7px;
+                color: var(--accent);
+                font-family: var(--font);
+                font-size: 11.5px;
+                font-weight: 600;
+                padding: 5px 12px;
+                cursor: pointer;
+                transition: all 0.15s;
+                white-space: nowrap;
+            }
+            .btn-patologias:hover {
+                background: rgba(79, 142, 247, 0.12);
+                border-color: var(--accent);
+            }
+
+            /* MODAL PATOLOGÍAS */
+            #pat-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.65);
+                z-index: 300;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                padding: 24px;
+            }
+            #pat-overlay.open {
+                display: flex;
+            }
+            #pat-modal {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                width: 100%;
+                max-width: 560px;
+                max-height: 82vh;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                overflow: hidden;
+            }
+            .pat-toolbar {
+                padding: 16px 20px;
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            .pat-toolbar h3 {
+                font-size: 14px;
+                font-weight: 600;
+                flex: 1;
+            }
+            .pat-body {
+                padding: 16px 20px;
+                overflow-y: auto;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+            .pat-category {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+            .pat-cat-title {
+                font-size: 10px;
+                font-weight: 700;
+                color: var(--muted);
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                margin-bottom: 2px;
+            }
+            .pat-chips {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .pat-chip {
+                background: var(--surface2);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 5px 12px;
+                font-size: 12px;
+                color: var(--text);
+                cursor: pointer;
+                transition: all 0.12s;
+                user-select: none;
+            }
+            .pat-chip:hover {
+                border-color: var(--accent);
+                color: var(--accent);
+            }
+            .pat-chip.on {
+                background: rgba(79, 142, 247, 0.15);
+                border-color: var(--accent);
+                color: #c5d4ff;
+                font-weight: 600;
+            }
+            .pat-footer {
+                padding: 14px 20px;
+                border-top: 1px solid var(--border);
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            }
+            .pat-footer-label {
+                font-size: 11px;
+                color: var(--muted);
+                flex: 1;
+            }
+            .btn-pat-ok {
+                background: linear-gradient(
+                    135deg,
+                    var(--accent),
+                    var(--accent2)
+                );
+                color: white;
+                border: none;
+                border-radius: 8px;
+                padding: 9px 22px;
+                font-family: var(--font);
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.15s;
+            }
+            .btn-pat-ok:hover {
+                opacity: 0.9;
+            }
+            .btn-pat-cancel {
+                background: none;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 8px 16px;
+                color: var(--muted);
+                font-family: var(--font);
+                font-size: 13px;
+                cursor: pointer;
+            }
+            .btn-pat-cancel:hover {
+                border-color: var(--muted);
+                color: var(--text);
+            }
+
+            /* BUSCADOR PATOLOGÍAS */
+            .pat-search-wrap {
+                padding: 12px 20px 0;
+            }
+            .pat-search {
+                width: 100%;
+                background: var(--surface2);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                color: var(--text);
+                font-family: var(--font);
+                font-size: 13px;
+                padding: 9px 14px 9px 36px;
+                outline: none;
+                transition: border-color 0.2s;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%237a85a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: 11px center;
+            }
+            .pat-search:focus {
+                border-color: var(--accent);
+            }
+            .pat-search::placeholder {
+                color: var(--muted);
+            }
+            .pat-no-results {
+                text-align: center;
+                color: var(--muted);
+                font-size: 13px;
+                padding: 24px 0;
+                display: none;
+            }
+            .pat-category.hidden {
+                display: none;
+            }
+            .pat-chip.hidden {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="header-inner">
+                <div style="display: flex; align-items: center; gap: 12px">
+                    <div class="logo-pill">PPI</div>
+                    <div>
+                        <h1>Plan de Intervención Personalizado</h1>
+                        <div class="subtitle">
+                            Selecciona las opciones que corresponden al
+                            residente
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-preview" onclick="mostrarPrevia()">
+                    📄 Ver resultado
+                </button>
+            </div>
+        </header>
+
+        <div class="progress-wrap">
+            <div class="progress-bg">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-label" id="progressLabel">
+                0 de 13 secciones completadas
+            </div>
+        </div>
+
+        <div class="nombre-block">
+            <div class="nombre-card">
+                <div class="nombre-label">Residente</div>
+                <input
+                    class="nombre-input"
+                    id="nombreResidente"
+                    type="text"
+                    placeholder="Nombre del residente..."
+                    oninput="updateProgress()"
+                />
+            </div>
+        </div>
+
+        <main id="mainContent"></main>
+
+        <!-- VISTA PREVIA -->
+        <div
+            id="preview-overlay"
+            onclick="if (event.target === this) cerrarPrevia();"
+        >
+            <div id="preview-modal">
+                <div class="preview-toolbar">
+                    <span
+                        >Selecciona todo el texto y cópialo (Ctrl+A,
+                        Ctrl+C)</span
+                    >
+                    <button
+                        class="btn-copy"
+                        id="btnCopy"
+                        onclick="copiarTexto()"
+                    >
+                        📋 Copiar todo
+                    </button>
+                    <button class="btn-close-preview" onclick="cerrarPrevia()">
+                        ✕ Cerrar
+                    </button>
+                </div>
+                <div id="preview-content"></div>
+            </div>
+        </div>
+
+        <div id="toast">✓ Copiado al portapapeles</div>
+
+        <script>
+            // ── DATOS ─────────────────────────────────────────────────────────────────────
+            const HENDERSON = [
+                {
+                    id: "respiracion",
+                    name: "Respiración",
+                    options: [
+                        {
+                            id: "r1",
+                            text: "El/la residente no presenta alteración y no precisa soporte de apoyo.",
+                        },
+                        {
+                            id: "r2",
+                            text: "El/la residente presenta problemas respiratorios nocturnos y precisa el soporte de CPAP/BPAP que mantenga unos niveles de O₂ en parámetros normales.",
+                        },
+                        {
+                            id: "r3",
+                            text: "El/la residente presenta problemas respiratorios crónicos precisando oxigenoterapia continua que mantenga los niveles de O₂ en parámetros normales.",
+                        },
+                    ],
+                },
+                {
+                    id: "alimentacion",
+                    name: "Alimentación",
+                    options: [
+                        {
+                            id: "al1",
+                            text: "Él/la residente es independiente para realizar la actividad de manera adecuada siendo capaz de alimentarse por sí mismo y de preparar los alimentos que va a consumir.",
+                        },
+                        {
+                            id: "al2",
+                            text: "Él/la residente es independiente parcialmente para realizar la actividad de manera adecuada siendo capaz de alimentarse por sí mismo, pero precisa ayuda para la preparación de los alimentos que va a consumir.",
+                        },
+                        {
+                            id: "al3",
+                            text: "Él/la residente es dependiente para realizar la actividad de manera adecuada, precisando ayuda para alimentarse.",
+                        },
+                    ],
+                },
+                {
+                    id: "eliminacion",
+                    name: "Eliminación",
+                    options: [
+                        {
+                            id: "eli1",
+                            text: "Él/la residente es doble continente.",
+                            subs: [
+                                {
+                                    id: "eli1a",
+                                    text: "Utiliza absorbentes tipo braga pañal 24h por precaución.",
+                                },
+                                {
+                                    id: "eli1b",
+                                    text: "No utiliza absorbentes.",
+                                },
+                            ],
+                        },
+                        {
+                            id: "eli2",
+                            text: "Él/la residente presenta incontinencia de urgencia.",
+                            subs: [
+                                {
+                                    id: "eli2a",
+                                    text: "Por fugas ocasionales utiliza absorbentes tipo braga pañal 24h por precaución.",
+                                },
+                                {
+                                    id: "eli2b",
+                                    text: "Utiliza absorbentes tipo braga pañal durante el día y absorbentes tipo pañal por la noche por precaución.",
+                                },
+                                {
+                                    id: "eli2c",
+                                    text: "No utiliza absorbentes.",
+                                },
+                            ],
+                        },
+                        {
+                            id: "eli3",
+                            text: "Él/la residente presenta incontinencia urinaria.",
+                            subs: [
+                                {
+                                    id: "eli3a",
+                                    text: "Utiliza absorbentes tipo pañal 24h.",
+                                },
+                                {
+                                    id: "eli3b",
+                                    text: "Utiliza absorbentes tipo braga pañal durante el día y absorbentes tipo pañal por la noche.",
+                                },
+                            ],
+                        },
+                        {
+                            id: "eli4",
+                            text: "Él/la residente presenta doble incontinencia. Utiliza absorbentes tipo pañal 24h.",
+                        },
+                    ],
+                },
+                {
+                    id: "movilidad",
+                    name: "Movilidad",
+                    options: [
+                        {
+                            id: "m1",
+                            text: "Él/la residente deambula por el centro sin necesidad de soporte de apoyo.",
+                        },
+                        {
+                            id: "m2",
+                            text: "Él/la residente deambula por el centro con soporte de apoyo tipo muleta/bastón.",
+                        },
+                        {
+                            id: "m3",
+                            text: "Él/la residente deambula por el centro con ayuda tipo andador.",
+                        },
+                        {
+                            id: "m4",
+                            text: "Él/la residente usa silla de ruedas en el centro, pero mantiene bipedestación adecuadamente.",
+                        },
+                        {
+                            id: "m5",
+                            text: "Él/la residente precisa silla de ruedas en el centro, pero mantiene bipedestación con ayuda.",
+                        },
+                        {
+                            id: "m6",
+                            text: "Él/la residente precisa silla de ruedas en el centro y no mantiene bipedestación.",
+                        },
+                    ],
+                },
+                {
+                    id: "reposo",
+                    name: "Reposo y sueño",
+                    options: [
+                        {
+                            id: "rs1",
+                            text: "El/la residente presenta un patrón de sueño adecuado sin precisar medicación específica para el descanso.",
+                        },
+                        {
+                            id: "rs2",
+                            text: "El/la residente presenta un patrón de sueño adecuado, con ayuda de medicación específica para el descanso.",
+                        },
+                        {
+                            id: "rs3",
+                            text: "El/la residente presenta un patrón de sueño inadecuado a pesar de tomar medicación específica para el descanso y en ocasiones medicación de rescate.",
+                        },
+                    ],
+                },
+                {
+                    id: "vestido",
+                    name: "Vestido",
+                    extra: {
+                        id: "v_extra",
+                        text: "El/la residente es consciente/no es consciente de la estación en la que estamos utilizando ropa de abrigo o ropa ligera.",
+                    },
+                    options: [
+                        {
+                            id: "vs1",
+                            text: "Él/la residente es independiente para realizar la actividad por sí mismo/a de manera adecuada.",
+                        },
+                        {
+                            id: "vs2",
+                            text: "Él/la residente es independiente para realizar la actividad por sí mismo/a pero precisa de la supervisión para que la realice de manera adecuada.",
+                        },
+                        {
+                            id: "vs3",
+                            text: "Él/la residente es dependiente para realizar la actividad de manera adecuada precisando ayuda de una persona. Es colaborador durante la realización de la actividad.",
+                        },
+                        {
+                            id: "vs4",
+                            text: "Él/la residente es dependiente para realizar la actividad de manera adecuada precisando ayuda.",
+                        },
+                    ],
+                },
+                {
+                    id: "bano",
+                    name: "Baño / aseo",
+                    options: [
+                        {
+                            id: "ba1",
+                            text: "Él/la residente es independiente para realizar la actividad por sí mismo/a de manera adecuada.",
+                        },
+                        {
+                            id: "ba2",
+                            text: "Él/la residente es independiente para realizar la actividad por sí mismo/a pero precisa de la supervisión para que la realice de manera adecuada.",
+                        },
+                        {
+                            id: "ba3",
+                            text: "Él/la residente es dependiente para realizar la actividad de manera adecuada precisando ayuda. Es colaborador durante la realización de la actividad.",
+                        },
+                        {
+                            id: "ba4",
+                            text: "Él/la residente es dependiente para realizar la actividad de manera adecuada precisando ayuda.",
+                        },
+                    ],
+                },
+                {
+                    id: "seguridad",
+                    name: "Seguridad del entorno",
+                    options: [
+                        {
+                            id: "se1",
+                            text: "Él/la residente conoce los peligros de su entorno y sabe cómo manejarlos adecuadamente para evitar accidentes. No precisa medidas de seguridad para la prevención.",
+                        },
+                        {
+                            id: "se2",
+                            text: "Él/la residente conoce los peligros de su entorno y sabe cómo manejarlos, pero precisa medidas de seguridad (doble barandilla/una barandilla) para confort y seguridad.",
+                        },
+                        {
+                            id: "se3",
+                            text: "Él/la residente no conoce los peligros de su entorno y por ello no sabe cómo manejarlos para evitar accidentes. Precisa medidas de seguridad (doble barandilla/una barandilla) para su seguridad.",
+                        },
+                    ],
+                },
+                {
+                    id: "comunicacion",
+                    name: "Comunicación",
+                    options: [
+                        {
+                            id: "co1",
+                            text: "Él/la residente se comunica de manera clara y fluida con un discurso adecuado y coherente. No presenta alteraciones del lenguaje.",
+                        },
+                        {
+                            id: "co2",
+                            text: "Él/la residente se comunica de manera clara y fluida, pero presenta un discurso incoherente debido a su deterioro cognitivo. No presenta alteraciones del lenguaje.",
+                        },
+                        {
+                            id: "co3",
+                            text: "Él/la residente no se comunica debido a alteraciones del lenguaje: [especificar]",
+                            editable: true,
+                        },
+                    ],
+                },
+                {
+                    id: "valores",
+                    name: "Valores y creencias",
+                    options: [
+                        {
+                            id: "vc1",
+                            text: "El/la residente presenta valores y creencias principalmente de ámbito religioso que influyen en su actitud frente a su estado de vida actual. Presenta curiosidad por su estado de salud e interés por mejorar.",
+                        },
+                        {
+                            id: "vc2",
+                            text: "El/la residente no presenta valores y creencias que influyan en su actitud frente a su estado de vida actual, pero presenta curiosidad por su estado de salud e interés por mejorar.",
+                        },
+                    ],
+                },
+                {
+                    id: "ocio",
+                    name: "Ocio",
+                    options: [
+                        {
+                            id: "oc1",
+                            text: "Él/la residente participa en las actividades recreativas propuestas por el centro que le gustan y le hacen sentir realizado/a consigo mismo/a.",
+                        },
+                        {
+                            id: "oc2",
+                            text: "Él/la residente no participa en las actividades recreativas propuestas por el centro ya que no son de su gusto.",
+                        },
+                        {
+                            id: "oc3",
+                            text: "Él/la residente no participa en las actividades recreativas propuestas por el centro debido a su deterioro cognitivo o estado basal que le impide la participación en las mismas.",
+                        },
+                    ],
+                },
+            ];
+
+            const SALUD_PERCIBIDA = [
+                {
+                    id: "sp1",
+                    text: "El/la residente expresa cómo percibe su salud: [completar]",
+                    editable: true,
+                },
+                {
+                    id: "sp2",
+                    text: "El/la residente presenta deterioro cognitivo que le impide expresar con claridad cómo percibe su salud.",
+                },
+            ];
+
+            const CHECK_SECTIONS = [
+                {
+                    id: "programas",
+                    name: "Programa, servicios y actividades propuestas",
+                    options: [
+                        {
+                            id: "pi1",
+                            text: "Control de glucemia diaria (de – al – me – ce) para residentes diabéticos insulino-dependientes descompensados que presentan sensor de glucemia.",
+                        },
+                        {
+                            id: "pi2",
+                            text: "Control de glucemia basal semanal para residentes diabéticos insulino-dependientes estables que no presentan sensor de glucemia.",
+                        },
+                        {
+                            id: "pi3",
+                            text: "Control de glucemia basal mensual para residentes diabéticos estables que toman antidiabéticos orales.",
+                        },
+                        {
+                            id: "pi4",
+                            text: "Planificación junto al equipo de cocina de dietas específicas para residentes diabéticos evitando alimentos con alto contenido en azúcares.",
+                        },
+                        {
+                            id: "pi5",
+                            text: "Control de Sintrom según especificaciones del equipo de hematología.",
+                        },
+                        {
+                            id: "pi6",
+                            text: "Planificación junto al equipo de cocina de dietas específicas para residentes anticoagulados evitando ciertos alimentos recomendados por el equipo de hematología.",
+                        },
+                        {
+                            id: "pi7",
+                            text: "Control de tensión arterial semanal para residentes hipertensos que presentan o no medicación antihipertensiva.",
+                        },
+                        {
+                            id: "pi8",
+                            text: "Control de tensión arterial mensual para residentes no hipertensos.",
+                        },
+                        {
+                            id: "pi9",
+                            text: "Planificación junto al equipo de cocina de dietas específicas para residentes hipertensos evitando alimentos con alto contenido en sal.",
+                        },
+                        { id: "pi10", text: "Control de peso cada 6 semanas." },
+                        {
+                            id: "pi11",
+                            text: "Planificación junto al equipo de cocina de dietas específicas para residentes con intolerancias/alergias evitando alimentos desencadenantes.",
+                        },
+                        {
+                            id: "pi12",
+                            text: "Planificación junto al equipo de cocina de dietas específicas para residentes con problemas renales evitando alimentos perjudiciales.",
+                        },
+                        {
+                            id: "pi13",
+                            text: "Planificación junto al equipo de cocina de dietas específicas para residentes con problemas de sobrepeso pautando dietas hipocalóricas y revisando control de peso para tomar medidas pertinentes.",
+                        },
+                        {
+                            id: "pi14",
+                            text: "Control de constantes según patología.",
+                        },
+                        {
+                            id: "pi15",
+                            text: "Control y prevención de UPP a través de dispositivos de apoyo (colchón anti-escaras, taloneras, etc.), cambios posturales, hidratación oral y de la piel, alimentación y suplementación si es necesario. Se realizará control más exhaustivo en residentes encamados y con movilidad reducida.",
+                        },
+                        {
+                            id: "pi16",
+                            text: "Prevención, control y cuidados de caídas evitando factores desencadenantes como objetos que entorpezcan la movilidad del residente, planificar cuidados nocturnos que favorezcan el descanso del residente para evitar episodios de inquietud y desorientación, fomentar el aprendizaje de seguridad del residente dependiendo de su estado cognitivo, etc.",
+                        },
+                    ],
+                },
+                {
+                    id: "apoyos",
+                    name: "Apoyos que precisa",
+                    options: [
+                        {
+                            id: "ap1",
+                            text: "Acompañamiento y guía durante procesos agudos y crónicos.",
+                        },
+                        {
+                            id: "ap2",
+                            text: "Suplencia/supervisión durante las actividades de la vida diaria.",
+                        },
+                        {
+                            id: "ap3",
+                            text: "Adaptación de los tratamientos a su capacidad de realización y comprensión.",
+                        },
+                        {
+                            id: "ap4",
+                            text: "Apoyo emocional continuado, respetando sus necesidades y preocupaciones.",
+                        },
+                    ],
+                },
+                {
+                    id: "pautas",
+                    name: "Pauta para la intervención personalizada",
+                    options: [
+                        {
+                            id: "pa1",
+                            text: "Utilizar un lenguaje claro y sencillo.",
+                        },
+                        {
+                            id: "pa2",
+                            text: "Dar órdenes breves y repetidas si fuera necesario.",
+                        },
+                        {
+                            id: "pa3",
+                            text: "Adaptar la información médica según su capacidad de atención y comprensión.",
+                        },
+                        {
+                            id: "pa4",
+                            text: "Mantener rutinas estables que aporten seguridad.",
+                        },
+                        {
+                            id: "pa5",
+                            text: "Coordinar actuaciones ante cualquier cambio significativo de su estado de salud.",
+                        },
+                        {
+                            id: "pa6",
+                            text: "Seguimiento y evaluación periódica por posibles cambios en nivel de autonomía del residente.",
+                        },
+                        {
+                            id: "pa7",
+                            text: "Fomentar la participación activa sobre su salud.",
+                        },
+                    ],
+                },
+                {
+                    id: "familia",
+                    name: "Intervenciones con la familia",
+                    options: [
+                        {
+                            id: "fa1",
+                            text: "Mantener una dieta equilibrada fuera del centro evitando alimentos que desestabilicen alguna de sus patologías.",
+                        },
+                        {
+                            id: "fa2",
+                            text: "Mantener una hidratación oral adecuada fuera del centro, principalmente en temporada de altas temperaturas.",
+                        },
+                        {
+                            id: "fa3",
+                            text: "Seguir adecuadamente el tratamiento terapéutico fuera del centro.",
+                        },
+                        {
+                            id: "fa4",
+                            text: "Mantener una comunicación fluida y cercana con el equipo de enfermería para conocer preocupaciones o dolencias del residente que no nos comunican por ellos mismos.",
+                        },
+                        {
+                            id: "fa5",
+                            text: "Informar y orientar a la familia sobre la evolución de las patologías que presenta el residente.",
+                        },
+                        {
+                            id: "fa6",
+                            text: "Comunicación bilateral para conocer en profundidad gustos y rutinas que presentaba el residente antes de su ingreso para mantener en la medida de lo posible dichas actividades.",
+                        },
+                    ],
+                },
+            ];
+
+            // ── HELPERS ───────────────────────────────────────────────────────────────────
+            const textos = {};
+            function getT(id, fallback) {
+                const el = document.getElementById("txt_" + id);
+                return el ? el.textContent.trim() : textos[id] || fallback;
+            }
+
+            // ── BUILD UI ──────────────────────────────────────────────────────────────────
+            function buildUI() {
+                const main = document.getElementById("mainContent");
+
+                // ── SECCIÓN A ──
+                main.insertAdjacentHTML(
+                    "beforeend",
+                    sectionShell("salud", "A", "Salud"),
+                );
+                const bA = document.getElementById("body_salud");
+
+                // Diagnóstico
+                bA.insertAdjacentHTML(
+                    "beforeend",
+                    `
+    <div class="subsection">
+      <div class="sub-header" style="justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:9px">
+          <div class="sub-dot"></div>
+          <div class="sub-name">Diagnóstico</div>
+        </div>
+        <button class="btn-patologias" onclick="abrirPatologias()">＋ Patologías frecuentes</button>
+      </div>
+      <div class="free-area">
+        <div class="free-label">Listado de patologías actuales</div>
+        <textarea class="free-textarea" id="free_diagnostico" placeholder="Ej: Hipertensión arterial, Diabetes mellitus tipo 2..." rows="3" oninput="updateProgress()"></textarea>
+      </div>
+    </div>`,
+                );
+
+                // Salud percibida
+                bA.insertAdjacentHTML(
+                    "beforeend",
+                    radioSubsection(
+                        "salud_percibida",
+                        "Salud percibida",
+                        SALUD_PERCIBIDA,
+                    ),
+                );
+
+                // Medicación fija (editable)
+                bA.insertAdjacentHTML(
+                    "beforeend",
+                    `
+    <div class="subsection">
+      <div class="sub-header"><div class="sub-dot" style="background:var(--green)"></div><div class="sub-name">Medicación <span style="font-weight:400;color:var(--muted);font-size:10.5px">(texto fijo)</span></div></div>
+      <div class="info-block" style="display:flex;align-items:flex-start;gap:10px">
+        <span id="txt_medicacion_fija" style="flex:1;line-height:1.65">La medicación que toma él/la residente se encuentra en su hoja de tratamiento, y está expuesta a cambios por el médico del centro, MAP o especialistas.</span>
+        <button class="btn-edit" style="flex-shrink:0;margin-top:1px" onclick="editTextoLibre('txt_medicacion_fija',this)">✏️</button>
+      </div>
+    </div>`,
+                );
+
+                // Henderson
+                let hHtml = `<div class="subsection"><div class="sub-header"><div class="sub-dot" style="background:var(--accent2)"></div><div class="sub-name">Valoración necesidades de Virginia Henderson</div></div><div class="nested-wrap">`;
+                HENDERSON.forEach((h) => {
+                    hHtml += nestedSub(h);
+                });
+                hHtml += "</div></div>";
+                bA.insertAdjacentHTML("beforeend", hHtml);
+
+                // ── SECCIÓN B ──
+                main.insertAdjacentHTML(
+                    "beforeend",
+                    sectionShell(
+                        "intervenciones",
+                        "B",
+                        "Propuestas de intervención",
+                    ),
+                );
+                const bB = document.getElementById("body_intervenciones");
+                CHECK_SECTIONS.forEach((cs) => {
+                    bB.insertAdjacentHTML("beforeend", checkSubsection(cs));
+                });
+
+                updateProgress();
+            }
+
+            function sectionShell(id, badge, title) {
+                return `<div class="section-card open">
+    <div class="section-header" onclick="this.parentElement.classList.toggle('open');this.querySelector('.chevron').style.transform=this.parentElement.classList.contains('open')?'rotate(180deg)':''">
+      <span class="section-badge">${badge}</span>
+      <span class="section-title">${title}</span>
+      <span class="chevron" style="transform:rotate(180deg)">▼</span>
+    </div>
+    <div class="section-body" id="body_${id}"></div>
+  </div>`;
+            }
+
+            function optionRow(opt, inputType, groupId) {
+                const txt = textos[opt.id] || opt.text;
+                return `<label class="opt-row" id="row_${opt.id}" onclick="${inputType === "radio" ? `selectRadio('${groupId}','${opt.id}')` : `toggleCheck(document.getElementById('${opt.id}'))`}">
+    <input type="${inputType}" name="${groupId}" id="${opt.id}" value="${opt.id}" onclick="event.stopPropagation();${inputType === "radio" ? `selectRadio('${groupId}','${opt.id}')` : `toggleCheck(this)`}">
+    <div class="opt-content">
+      <span class="opt-text" id="txt_${opt.id}">${txt}</span>
+      <button class="btn-edit" title="Editar" onclick="editText(event,'${opt.id}')">✏️</button>
+    </div>
+  </label>`;
+            }
+
+            function radioSubsection(groupId, name, options) {
+                let html = `<div class="subsection"><div class="sub-header"><div class="sub-dot"></div><div class="sub-name">${name}</div></div><div class="options-list">`;
+                options.forEach((opt) => {
+                    html += optionRow(opt, "radio", groupId);
+                });
+                return html + "</div></div>";
+            }
+
+            function nestedSub(h) {
+                let html = `<div class="nested-sub"><div class="nested-header"><div class="nested-dot"></div><div class="nested-name">${h.name}</div></div><div class="options-list">`;
+                h.options.forEach((opt) => {
+                    html += optionRow(opt, "radio", h.id);
+                    if (opt.subs) {
+                        html += `<div class="suboptions" id="sub_${opt.id}" style="display:none">`;
+                        opt.subs.forEach((s) => {
+                            html += optionRow(s, "radio", "sub_" + opt.id);
+                        });
+                        html += "</div>";
+                    }
+                });
+                if (h.extra) {
+                    const etxt = textos[h.extra.id] || h.extra.text;
+                    html += `<label class="opt-row" id="row_${h.extra.id}" style="border-style:dashed;margin-top:3px" onclick="toggleCheck(document.getElementById('${h.extra.id}'))">
+      <input type="checkbox" id="${h.extra.id}" onclick="event.stopPropagation();toggleCheck(this)">
+      <div class="opt-content">
+        <span class="opt-text" id="txt_${h.extra.id}" style="color:var(--muted);font-size:12px">[Extra] ${etxt}</span>
+        <button class="btn-edit" onclick="editText(event,'${h.extra.id}')">✏️</button>
+      </div>
+    </label>`;
+                }
+                return html + "</div></div>";
+            }
+
+            function checkSubsection(cs) {
+                let html = `<div class="subsection"><div class="sub-header"><div class="sub-dot" style="background:var(--green)"></div><div class="sub-name">${cs.name}</div></div><div class="options-list">`;
+                cs.options.forEach((opt) => {
+                    html += optionRow(opt, "checkbox", cs.id);
+                });
+                return html + "</div></div>";
+            }
+
+            // ── INTERACTIONS ──────────────────────────────────────────────────────────────
+            function selectRadio(groupId, optId) {
+                document
+                    .querySelectorAll(`input[name="${groupId}"]`)
+                    .forEach((inp) => {
+                        document
+                            .getElementById("row_" + inp.value)
+                            ?.classList.remove("selected");
+                        const s = document.getElementById("sub_" + inp.value);
+                        if (s) s.style.display = "none";
+                    });
+                const row = document.getElementById("row_" + optId);
+                if (row) {
+                    row.classList.add("selected");
+                    row.querySelector("input").checked = true;
+                }
+                const sub = document.getElementById("sub_" + optId);
+                if (sub) sub.style.display = "flex";
+                updateProgress();
+            }
+
+            function toggleCheck(el) {
+                if (!el) return;
+                el.closest(".opt-row")?.classList.toggle(
+                    "selected",
+                    el.checked,
+                );
+                updateProgress();
+            }
+
+            function editText(e, id) {
+                e.preventDefault();
+                e.stopPropagation();
+                const span = document.getElementById("txt_" + id);
+                const btn = e.currentTarget;
+                if (span.contentEditable === "true") {
+                    span.contentEditable = "false";
+                    textos[id] = span.textContent;
+                    btn.textContent = "✏️";
+                } else {
+                    span.contentEditable = "true";
+                    span.focus();
+                    btn.textContent = "✅";
+                    const r = document.createRange();
+                    r.selectNodeContents(span);
+                    window.getSelection().removeAllRanges();
+                    window.getSelection().addRange(r);
+                    span.addEventListener("keydown", function h(ev) {
+                        if (ev.key === "Enter") {
+                            ev.preventDefault();
+                            editText(
+                                {
+                                    preventDefault: () => {},
+                                    stopPropagation: () => {},
+                                    currentTarget: btn,
+                                },
+                                id,
+                            );
+                            span.removeEventListener("keydown", h);
+                        }
+                    });
+                }
+            }
+
+            function updateProgress() {
+                const fields = [
+                    "salud_percibida",
+                    ...HENDERSON.map((h) => h.id),
+                ];
+                let done = 0;
+                if (document.getElementById("free_diagnostico")?.value?.trim())
+                    done++;
+                fields.forEach((f) => {
+                    if (document.querySelector(`input[name="${f}"]:checked`))
+                        done++;
+                });
+                const total = 13;
+                document.getElementById("progressFill").style.width =
+                    (done / total) * 100 + "%";
+                document.getElementById("progressLabel").textContent =
+                    `${done} de ${total} secciones completadas`;
+            }
+
+            // ── VISTA PREVIA ──────────────────────────────────────────────────────────────
+            function mostrarPrevia() {
+                const nombre =
+                    document.getElementById("nombreResidente").value.trim() ||
+                    "[Nombre del residente]";
+                const diagnostico =
+                    document
+                        .getElementById("free_diagnostico")
+                        ?.value?.trim() || "";
+
+                const needNames = {
+                    respiracion: "Respiración",
+                    alimentacion: "Alimentación",
+                    eliminacion: "Eliminación",
+                    movilidad: "Movilidad",
+                    reposo: "Reposo y sueño",
+                    vestido: "Vestido",
+                    bano: "Baño/aseo",
+                    seguridad: "Seguridad del entorno",
+                    comunicacion: "Comunicación",
+                    valores: "Valores y creencias",
+                    ocio: "Ocio",
+                };
+
+                let html = `<div class="doc-title">Plantilla PPI</div>`;
+                html += `<div class="doc-field"><b>Nombre de la persona usuaria:</b> ${nombre}</div>`;
+                html += `<div class="doc-heading">A. Salud</div>`;
+
+                const diagVal = document
+                    .getElementById("free_diagnostico")
+                    .value.trim();
+                if (diagVal) {
+                    html += `<div class="doc-bullet"><b>Diagnóstico:</b> Actualmente él/la residente presenta los siguientes diagnósticos relacionados con sus patologías: ${diagVal}</div>`;
+                }
+
+                const spSel = document.querySelector(
+                    'input[name="salud_percibida"]:checked',
+                );
+                if (spSel) {
+                    html += `<div class="doc-bullet"><b>Salud percibida:</b> ${getT(spSel.value, "")}</div>`;
+                }
+
+                const medTxt =
+                    document
+                        .getElementById("txt_medicacion_fija")
+                        ?.textContent?.trim() ||
+                    "La medicación que toma él/la residente se encuentra en su hoja de tratamiento, y está expuesta a cambios por el médico del centro, MAP o especialistas.";
+                html += `<div class="doc-bullet"><b>Medicación:</b> ${medTxt}</div>`;
+
+                html += `<div class="doc-bullet"><b>Valoración de las 14 necesidades de Virginia Henderson:</b> La situación actual del o de la residente es:</div>`;
+
+                HENDERSON.forEach((h) => {
+                    const sel = document.querySelector(
+                        `input[name="${h.id}"]:checked`,
+                    );
+                    if (!sel) return;
+                    html += `<div class="doc-sub"><b>${needNames[h.id]}:</b> ${getT(sel.value, "")}</div>`;
+                    const subSel = document.querySelector(
+                        `input[name="sub_${sel.value}"]:checked`,
+                    );
+                    if (subSel)
+                        html += `<div class="doc-subsub">${getT(subSel.value, "")}</div>`;
+                    if (h.extra) {
+                        const exEl = document.getElementById(h.extra.id);
+                        if (exEl?.checked)
+                            html += `<div class="doc-subsub">${getT(h.extra.id, h.extra.text)}</div>`;
+                    }
+                });
+
+                html += `<div class="doc-heading">Propuestas de intervención</div>`;
+
+                CHECK_SECTIONS.forEach((cs) => {
+                    const sel = cs.options.filter(
+                        (o) => document.getElementById(o.id)?.checked,
+                    );
+                    if (!sel.length) return;
+                    html += `<div class="doc-bullet"><b>${cs.name}</b></div>`;
+                    sel.forEach((o) => {
+                        html += `<div class="doc-check">– ${getT(o.id, o.text)}</div>`;
+                    });
+                });
+
+                document.getElementById("preview-content").innerHTML = html;
+                document
+                    .getElementById("preview-overlay")
+                    .classList.add("open");
+            }
+
+            function cerrarPrevia() {
+                document
+                    .getElementById("preview-overlay")
+                    .classList.remove("open");
+            }
+
+            function copiarTexto() {
+                const content = document.getElementById("preview-content");
+                // Seleccionar todo el contenido del div
+                const range = document.createRange();
+                range.selectNodeContents(content);
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+
+                try {
+                    // Intentar copiar con formato (para pegar en Word con estilos)
+                    document.execCommand("copy");
+                    sel.removeAllRanges();
+                    const btn = document.getElementById("btnCopy");
+                    btn.textContent = "✓ Copiado";
+                    btn.classList.add("ok");
+                    setTimeout(() => {
+                        btn.textContent = "📋 Copiar todo";
+                        btn.classList.remove("ok");
+                    }, 2000);
+                    const t = document.getElementById("toast");
+                    t.classList.add("show");
+                    setTimeout(() => t.classList.remove("show"), 2500);
+                } catch (e) {
+                    alert(
+                        "Usa Ctrl+A para seleccionar todo el texto del documento y luego Ctrl+C para copiarlo.",
+                    );
+                }
+            }
+
+            // ── EDICIÓN TEXTO LIBRE ───────────────────────────────────────────────────────
+            function editTextoLibre(spanId, btn) {
+                const span = document.getElementById(spanId);
+                if (span.contentEditable === "true") {
+                    span.contentEditable = "false";
+                    btn.textContent = "✏️";
+                } else {
+                    span.contentEditable = "true";
+                    span.focus();
+                    btn.textContent = "✅";
+                    const r = document.createRange();
+                    r.selectNodeContents(span);
+                    window.getSelection().removeAllRanges();
+                    window.getSelection().addRange(r);
+                    span.addEventListener("keydown", function h(ev) {
+                        if (ev.key === "Enter") {
+                            ev.preventDefault();
+                            editTextoLibre(spanId, btn);
+                            span.removeEventListener("keydown", h);
+                        }
+                    });
+                }
+            }
+
+            // ── PATOLOGÍAS FRECUENTES ─────────────────────────────────────────────────────
+            const PATOLOGIAS = [
+                {
+                    cat: "Cardiovascular",
+                    items: [
+                        "Hipertensión arterial",
+                        "Insuficiencia cardíaca",
+                        "Cardiopatía isquémica",
+                        "Fibrilación auricular",
+                        "Arterioesclerosis",
+                        "Insuficiencia venosa",
+                        "Trombosis venosa profunda",
+                    ],
+                },
+                {
+                    cat: "Metabólica / Endocrina",
+                    items: [
+                        "Diabetes mellitus tipo 2",
+                        "Diabetes mellitus tipo 1",
+                        "Hipotiroidismo",
+                        "Hipertiroidismo",
+                        "Dislipemia",
+                        "Obesidad",
+                        "Hiperuricemia / Gota",
+                    ],
+                },
+                {
+                    cat: "Respiratoria",
+                    items: [
+                        "EPOC",
+                        "Asma bronquial",
+                        "Insuficiencia respiratoria crónica",
+                        "SAOS (apnea del sueño)",
+                        "Neumonía de repetición",
+                    ],
+                },
+                {
+                    cat: "Neurológica / Cognitiva",
+                    items: [
+                        "Demencia tipo Alzheimer",
+                        "Demencia vascular",
+                        "Demencia mixta",
+                        "Deterioro cognitivo leve",
+                        "Enfermedad de Parkinson",
+                        "ACV / Ictus",
+                        "Epilepsia",
+                        "Esclerosis múltiple",
+                    ],
+                },
+                {
+                    cat: "Psiquiátrica",
+                    items: [
+                        "Depresión mayor",
+                        "Trastorno de ansiedad",
+                        "Trastorno bipolar",
+                        "Esquizofrenia",
+                        "Síndrome confusional agudo",
+                    ],
+                },
+                {
+                    cat: "Musculoesquelética",
+                    items: [
+                        "Artrosis",
+                        "Artritis reumatoide",
+                        "Osteoporosis",
+                        "Fractura de cadera",
+                        "Estenosis de canal lumbar",
+                        "Síndrome de inmovilidad",
+                    ],
+                },
+                {
+                    cat: "Digestiva / Renal",
+                    items: [
+                        "Insuficiencia renal crónica",
+                        "Reflujo gastroesofágico",
+                        "Úlcera gastroduodenal",
+                        "Estreñimiento crónico",
+                        "Incontinencia fecal",
+                    ],
+                },
+                {
+                    cat: "Oncológica",
+                    items: [
+                        "Neoplasia de colon",
+                        "Neoplasia de próstata",
+                        "Neoplasia de mama",
+                        "Neoplasia de pulmón",
+                        "Neoplasia en remisión",
+                    ],
+                },
+                {
+                    cat: "Otras",
+                    items: [
+                        "Anemia crónica",
+                        "Anticoagulación crónica (Sintrom/ACOD)",
+                        "Insuficiencia hepática",
+                        "Úlceras por presión",
+                        "Disfagia",
+                        "Malnutrición",
+                    ],
+                },
+            ];
+
+            function filtrarPatologias(q) {
+                const term = q.toLowerCase().trim();
+                let anyVisible = false;
+                document
+                    .querySelectorAll("#pat-chips-wrap .pat-category")
+                    .forEach((cat) => {
+                        let catVisible = false;
+                        cat.querySelectorAll(".pat-chip").forEach((chip) => {
+                            const match =
+                                !term ||
+                                chip.textContent.toLowerCase().includes(term);
+                            chip.classList.toggle("hidden", !match);
+                            if (match) catVisible = true;
+                        });
+                        cat.classList.toggle("hidden", !catVisible);
+                        if (catVisible) anyVisible = true;
+                    });
+                document.getElementById("pat-no-results").style.display =
+                    anyVisible ? "none" : "block";
+            }
+
+            // Set de patologías actualmente seleccionadas (persiste entre aperturas)
+            const patSeleccionadas = new Set();
+
+            function abrirPatologias() {
+                // Sincronizar: añadir al set lo que haya escrito manualmente en el textarea
+                const ta = document.getElementById("free_diagnostico");
+                ta.value
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean)
+                    .forEach((p) => patSeleccionadas.add(p));
+
+                // Limpiar solo las categorías (el div#pat-chips-wrap), no tocar el div de no-results
+                const wrap = document.getElementById("pat-chips-wrap");
+                wrap.innerHTML = "";
+
+                PATOLOGIAS.forEach((grupo) => {
+                    const div = document.createElement("div");
+                    div.className = "pat-category";
+                    div.innerHTML =
+                        '<div class="pat-cat-title">' +
+                        grupo.cat +
+                        '</div><div class="pat-chips"></div>';
+                    wrap.appendChild(div);
+                    const chips = div.querySelector(".pat-chips");
+                    grupo.items.forEach((item) => {
+                        const chip = document.createElement("span");
+                        chip.className =
+                            "pat-chip" +
+                            (patSeleccionadas.has(item) ? " on" : "");
+                        chip.textContent = item;
+                        chip.onclick = () => {
+                            chip.classList.toggle("on");
+                            if (chip.classList.contains("on"))
+                                patSeleccionadas.add(item);
+                            else patSeleccionadas.delete(item);
+                        };
+                        chips.appendChild(chip);
+                    });
+                });
+
+                document.getElementById("pat-no-results").style.display =
+                    "none";
+                document.getElementById("pat-overlay").classList.add("open");
+                const searchEl = document.getElementById("pat-search");
+                searchEl.value = "";
+                setTimeout(() => searchEl.focus(), 80);
+            }
+
+            function cerrarPatologias() {
+                document.getElementById("pat-overlay").classList.remove("open");
+            }
+
+            function guardarPatologias() {
+                if (!patSeleccionadas.size) {
+                    cerrarPatologias();
+                    return;
+                }
+                const ta = document.getElementById("free_diagnostico");
+                // Reconstruir el textarea con todas las seleccionadas + lo que no sea de la lista
+                const enLista = new Set(PATOLOGIAS.flatMap((g) => g.items));
+                const manuales = ta.value
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter((s) => s && !enLista.has(s));
+                const todas = [
+                    ...patSeleccionadas,
+                    ...manuales.filter((m) => !patSeleccionadas.has(m)),
+                ];
+                ta.value = todas.join(", ");
+                updateProgress();
+                cerrarPatologias();
+            }
+
+            // Cerrar con Escape
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") cerrarPrevia();
+            });
+
+            buildUI();
+        </script>
+
+        <!-- MODAL PATOLOGÍAS -->
+        <div
+            id="pat-overlay"
+            onclick="if (event.target === this) cerrarPatologias();"
+        >
+            <div id="pat-modal">
+                <div class="pat-toolbar">
+                    <h3>🏥 Patologías frecuentes</h3>
+                    <button class="btn-pat-cancel" onclick="cerrarPatologias()">
+                        ✕
+                    </button>
+                </div>
+                <div class="pat-search-wrap">
+                    <input
+                        class="pat-search"
+                        id="pat-search"
+                        type="text"
+                        placeholder="Buscar patología..."
+                        oninput="filtrarPatologias(this.value)"
+                        autocomplete="off"
+                    />
+                </div>
+                <div class="pat-body" id="pat-body">
+                    <div id="pat-chips-wrap"></div>
+                    <div class="pat-no-results" id="pat-no-results">
+                        No se encontraron resultados
+                    </div>
+                </div>
+                <div class="pat-footer">
+                    <span class="pat-footer-label"
+                        >También puedes escribir directamente en el recuadro de
+                        texto</span
+                    >
+                    <button class="btn-pat-cancel" onclick="cerrarPatologias()">
+                        Cancelar
+                    </button>
+                    <button class="btn-pat-ok" onclick="guardarPatologias()">
+                        Añadir seleccionadas
+                    </button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
